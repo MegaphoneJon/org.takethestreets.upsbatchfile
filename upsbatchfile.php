@@ -2,6 +2,13 @@
 
 require_once 'upsbatchfile.civix.php';
 
+function upsbatchfile_civicrm_buildForm($formName, &$form) {
+  if ($formName == 'CRM_Export_Form_Map') {
+    CRM_Core_Error::debug_var('formName', $formName);
+    CRM_Core_Resources::singleton()->addScriptFile('org.takethestreets.upsbatchfile', 'js/batchfilesetting.js');
+  }
+}
+
 /**
  * Add the fields to the export that the UPS Batch File Import expects.
  */
