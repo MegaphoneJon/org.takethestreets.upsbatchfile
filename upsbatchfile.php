@@ -2,6 +2,60 @@
 
 require_once 'upsbatchfile.civix.php';
 
+// Add the fields to the export that the UPS Batch File Import expects
+function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColumns, &$exportMode) {
+  $sql = "ALTER TABLE $exportTempTable " .
+    "ADD COLUMN ups_packaging_type CHAR(2) " .
+    ",ADD COLUMN ups_weight CHAR(5)" .
+    ",ADD COLUMN ups_length CHAR(4)" .
+    ",ADD COLUMN ups_width CHAR(4)" .
+    ",ADD COLUMN ups_height CHAR(4)" .
+    ",ADD COLUMN ups_residential_indicator CHAR(1) AFTER `phone_ext`";
+
+  CRM_Core_DAO::singleValueQuery($sql);
+
+  $sql = "UPDATE $exportTempTable " .
+    "SET ups_packaging_type = 2, " .
+    "ups_weight = 2, " .
+    "ups_length = 8, " .
+    "ups_width = 6, " .
+    "ups_height = 6, " .
+    "ups_residential_indicator = 1, " .
+    "country = 'US'";
+  CRM_Core_DAO::singleValueQuery($sql);
+
+  $headerRows[] = "Packaging Type";
+  $headerRows[] = "Weight";
+  $headerRows[] = "Length";
+  $headerRows[] = "Width";
+  $headerRows[] = "Height";
+
+  $sqlColumns['ups_packaging_type'] = 'packaging_type CHAR(2)';
+  $sqlColumns['ups_weight'] = 'CHAR(5)';
+  $sqlColumns['ups_length'] = 'CHAR(4)';
+  $sqlColumns['ups_width'] = 'CHAR(4)';
+  $sqlColumns['ups_height'] = 'CHAR(4)';
+
+  // Residential Indicator is a special case, it needs splicing into the middle.
+  array_splice($headerRows, 10, 0, array("Residential Indicator"));
+  array_splice_preserve_keys($sqlColumns, 10, 0, array('ups_residential_indicator' => 'CHAR(1)'));
+  CRM_Core_Error::debug_var('headerRows', $headerRows);
+  CRM_Core_Error::debug_var('sqlColumns', $sqlColumns);
+
+}
+function array_splice_preserve_keys(&$input, $offset, $length = NULL, $replacement = array()) {
+  if (empty($replacement)) {
+    return array_splice($input, $offset, $length);
+  }
+
+  $part_before  = array_slice($input, 0, $offset, $preserve_keys = TRUE);
+  $part_removed = array_slice($input, $offset, $length, $preserve_keys = TRUE);
+  $part_after   = array_slice($input, $offset + $length, NULL, $preserve_keys = TRUE);
+
+  $input = $part_before + $replacement + $part_after;
+
+  return $part_removed;
+}
 /**
  * Implements hook_civicrm_config().
  *
