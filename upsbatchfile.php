@@ -2,8 +2,17 @@
 
 require_once 'upsbatchfile.civix.php';
 
-// Add the fields to the export that the UPS Batch File Import expects
+/**
+ * Add the fields to the export that the UPS Batch File Import expects.
+ */
 function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColumns, &$exportMode) {
+  // Is UPS Batch File Export enabled?
+  $result = civicrm_api3('Setting', 'getvalue', array(
+    'name' => "enableBatchFileExport",
+  ));
+  if (!$result) {
+    return;
+  }
   CRM_Core_Error::backtrace(1, 1);
   $sql = "ALTER TABLE $exportTempTable " .
     "ADD COLUMN ups_packaging_type CHAR(2) " .
