@@ -4,6 +4,7 @@ require_once 'upsbatchfile.civix.php';
 
 // Add the fields to the export that the UPS Batch File Import expects
 function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColumns, &$exportMode) {
+  CRM_Core_Error::backtrace(1, 1);
   $sql = "ALTER TABLE $exportTempTable " .
     "ADD COLUMN ups_packaging_type CHAR(2) " .
     ",ADD COLUMN ups_weight CHAR(5)" .
@@ -39,8 +40,6 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
   // Residential Indicator is a special case, it needs splicing into the middle.
   array_splice($headerRows, 10, 0, array("Residential Indicator"));
   array_splice_preserve_keys($sqlColumns, 10, 0, array('ups_residential_indicator' => 'CHAR(1)'));
-  CRM_Core_Error::debug_var('headerRows', $headerRows);
-  CRM_Core_Error::debug_var('sqlColumns', $sqlColumns);
 
 }
 function array_splice_preserve_keys(&$input, $offset, $length = NULL, $replacement = array()) {
