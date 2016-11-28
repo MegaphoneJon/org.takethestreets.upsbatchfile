@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <extension key="org.takethestreets.upsbatchfile" type="module">
   <file>upsbatchfile</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
+  <name>UPS Batch File Export</name>
+  <description>Export records in a format matching the UPS Batch File specification.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Jon goldberg</author>
-    <email>jon@palantetech.coop</email>
+    <author>Jon Goldberg</author>
+    <email>work@takethestreets.org</email>
   </maintainer>
   <urls>
     <url desc="Main Extension Page">http://FIXME</url>
@@ -18,9 +18,11 @@
   <version>1.0</version>
   <develStage>alpha</develStage>
   <compatibility>
-    <ver>4.2</ver>
+    <ver>4.5</ver>
+    <ver>4.6</ver>
+    <ver>4.7</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
+  <comments>This extension enables CiviCRM to export in the format expected by UPS Batch File Import.  Generously sponsored by the Calyx Institute.</comments>
   <civix>
     <namespace>CRM/Upsbatchfile</namespace>
   </civix>
