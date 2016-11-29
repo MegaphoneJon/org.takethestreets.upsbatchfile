@@ -1,5 +1,5 @@
 Package: org.takethestreets.upsbatchfile
-Copyright (C) 2016, Jon goldberg <jon@palantetech.coop>
+Copyright (C) 2016, Jon Goldberg <work@takethestreets.org>
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------
