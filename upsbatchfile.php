@@ -20,7 +20,10 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
   if (!$result) {
     return;
   }
-  CRM_Core_Error::debug_var('sqlColumns', $sqlColumns);
+  // Get the key name of the country, email and phone extension fields; they change based on location type.
+  $phoneExtensionFieldName = key(array_slice($sqlColumns, -2, 1));
+  $countryFieldName = key(array_slice($sqlColumns, 1, 1));
+  $emailFieldName = key(array_slice($sqlColumns, -1, 1));
   $sql = "ALTER TABLE $exportTempTable " .
     "ADD COLUMN contact_name CHAR(255) FIRST" .
     ",ADD COLUMN ups_packaging_type CHAR(2) " .
@@ -51,7 +54,7 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
     ",ADD COLUMN email_notification_1_delivery CHAR(1)" .
     ",ADD COLUMN email_notification_2_address CHAR(50)" .
     ",ADD COLUMN email_notification_2_ship CHAR(1)" .
-    ",ADD COLUMN ups_residential_indicator CHAR(1) AFTER `phone_ext`";
+    ",ADD COLUMN ups_residential_indicator CHAR(1) AFTER `$phoneExtensionFieldName`";
 
   CRM_Core_DAO::singleValueQuery($sql);
 
@@ -86,11 +89,11 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
     "email_notification_1_delivery = 1, " .
     "email_notification_2_address = 'donations@calyxinstitute.org', " .
     "email_notification_2_ship = 1, " .
-    "country = 'US'";
+    "$countryFieldName = 'US'";
   CRM_Core_DAO::singleValueQuery($sql);
 
   // Get the email address again
-  $sql = "UPDATE $exportTempTable SET email_notification_1_address = email";
+  $sql = "UPDATE $exportTempTable SET email_notification_1_address = $emailFieldName";
   CRM_Core_DAO::singleValueQuery($sql);
 
   $headerRows[] = "Packaging Type";
