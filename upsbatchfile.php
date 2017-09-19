@@ -42,7 +42,7 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
     ",ADD COLUMN blankAA CHAR(1)" .
     ",ADD COLUMN blankAB CHAR(1)" .
     ",ADD COLUMN blankAC CHAR(1)" .
-    ",ADD COLUMN blankAD CHAR(1)" .
+    ",ADD COLUMN ups_carbon_neutral CHAR(1)" .
     ",ADD COLUMN blankAE CHAR(1)" .
     ",ADD COLUMN blankAF CHAR(1)" .
     ",ADD COLUMN blankAG CHAR(1)" .
@@ -77,7 +77,7 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
     "blankAA = '', " .
     "blankAB = '', " .
     "blankAC = '', " .
-    "blankAD = '', " .
+    "ups_carbon_neutral = 1, " .
     "blankAE = '', " .
     "blankAF = '', " .
     "blankAG = '', " .
@@ -112,7 +112,7 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
   $headerRows[] = "";
   $headerRows[] = "";
   $headerRows[] = "";
-  $headerRows[] = "";
+  $headerRows[] = "UPS Carbon Neutral";
   $headerRows[] = "";
   $headerRows[] = "";
   $headerRows[] = "";
@@ -141,7 +141,7 @@ function upsbatchfile_civicrm_export(&$exportTempTable, &$headerRows, &$sqlColum
   $sqlColumns['blankAA'] = 'CHAR(1)';
   $sqlColumns['blankAB'] = 'CHAR(1)';
   $sqlColumns['blankAC'] = 'CHAR(1)';
-  $sqlColumns['blankAD'] = 'CHAR(1)';
+  $sqlColumns['ups_carbon_neutral'] = 'CHAR(1)';
   $sqlColumns['blankAE'] = 'CHAR(1)';
   $sqlColumns['blankAF'] = 'CHAR(1)';
   $sqlColumns['blankAG'] = 'CHAR(1)';
